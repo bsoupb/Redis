@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,7 +20,7 @@ public class RedisDataStructureService {
         log.info("Redis String 연산 시작...");
 
         // 문자열 값을 설정
-        redisTemplate.opsForValue().set("product:1:ame", "스마트폰");
+        redisTemplate.opsForValue().set("product:1:name", "스마트폰");
 
         // 만료시간 함께 설정
         redisTemplate.opsForValue().set("product:1:view-count", 100,1, TimeUnit.HOURS);
@@ -33,7 +32,7 @@ public class RedisDataStructureService {
         // 카운트를 증가
         redisTemplate.opsForValue().increment("product:1:view-count");
 
-        Object viewCount = redisTemplate.opsForValue().get("product:1:view-count");
+        String viewCount = (String) redisTemplate.opsForValue().get("product:1:view-count");
         log.info("증가 후 조회수: {}", viewCount);
     }
 
